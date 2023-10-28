@@ -11,7 +11,7 @@ This intermediary, wrapper, or proxyproxy (not a network proxy) either allows th
 
 ## The following is the basic concept of a circuit breaker:
 
-The circuit is by default in closed mode, which permits you to make free calls to the destination. It will stop allowing you to make further requests after a predetermined number of unsuccessful responses from the destination (a threshold, let's say 5), and the circuit will be regarded as open for a while (a backoff period, say 30 seconds). It enters a state known as Half-Open after that time. If the purpose of the subsequent request is to ascertain whether we will remain in an open state or enter a closed state.
+The circuit is by default in closed mode, which permits you to make free calls to the destination. It will stop allowing you to make further requests after a predetermined number of unsuccessful responses from the destination (a threshold, let's say 3), and the circuit will be regarded as open for a while (a backoff period, say 10 seconds). It enters a state known as Half-Open after that time. If the purpose of the subsequent request is to ascertain whether we will remain in an open state or enter a closed state.
 
 The circuit will be closed if the request is approved; otherwise, we will revert to an open condition and have to wait for another back-off period.
 

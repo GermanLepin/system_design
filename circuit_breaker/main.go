@@ -71,21 +71,12 @@ func (cb *circuitBreaker) makeCircuitBreakerRequest(
 	suceededRequests chan *http.Response,
 	failedRequests chan error,
 ) {
-	var wg sync.WaitGroup
-
 	for i := 0; i < cb.maxRequest; i++ {
-		wg.Add(1)
-
-		go func(url string) {
-			defer wg.Done()
-
-			response, err := http.Get(url)
-			if err == nil {
-				suceededRequests <- response
-			}
-		}(url)
+		response, err := http.Get(url)
+		if err == nil {
+			suceededRequests <- response
+		}
 	}
-	wg.Wait()
 
 	time.Sleep(time.Duration(cb.delaySeconds) * time.Second)
 	response, err := http.Get(url)
