@@ -5,12 +5,6 @@ import (
 	"sync"
 )
 
-// Pub/sub, short for “publish-subscribe,” is a messaging pattern that decouples systems
-// and communications between them. As indicated in the name, a pub/sub system has two
-// types of entities: Publishers and Subscribers. Publishers are entities that produce
-// messages and publish them to a specific topic, whereas Subscribers are entities that
-// receive messages by subscribing to a specific topic.
-
 func main() {
 	agent := newAgent()
 
