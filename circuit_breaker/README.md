@@ -17,6 +17,6 @@ The circuit is by default in closed mode, which permits you to make free calls t
 
 The circuit will be closed if the request is approved; otherwise, we will revert to an open condition and have to wait for another back-off period.
 
-[Schema of pub/sub pattern](image.png)
+![Schema of pub/sub pattern](image.png)
 
 
