@@ -48,8 +48,6 @@ func (a *agent) Close() {
 }
 
 func (a *agent) Read(ch <-chan string) {
-	//defer a.Wg.Done()
-
 	for value := range ch {
 		fmt.Println(value)
 	}
@@ -59,7 +57,6 @@ type agent struct {
 	subs map[string][]chan string
 
 	closed bool
-	Wg     sync.WaitGroup
 	mu     sync.RWMutex
 }
 
