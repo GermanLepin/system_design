@@ -29,6 +29,7 @@ func main() {
 	suceededRequests := make(chan *http.Response)
 	failedRequests := make(chan error)
 
+	// 3 times are max request and 10 seconds are delay
 	circuitBreaker := newCircuitBreaker(3, 10)
 
 	circuitBreaker.wg.Add(2)
@@ -42,8 +43,9 @@ func (cb *circuitBreaker) makeRequests(
 	suceededRequests chan *http.Response,
 	failedRequests chan error,
 ) {
-	var wg sync.WaitGroup
+	defer cb.wg.Done()
 
+	var wg sync.WaitGroup
 	for _, url := range urls {
 		wg.Add(1)
 
@@ -63,7 +65,6 @@ func (cb *circuitBreaker) makeRequests(
 
 	close(failedRequests)
 	close(suceededRequests)
-	cb.wg.Done()
 }
 
 func (cb *circuitBreaker) makeCircuitBreakerRequest(
@@ -91,6 +92,8 @@ func (cb *circuitBreaker) readResponse(
 	suceededRequests chan *http.Response,
 	failedRequests chan error,
 ) {
+	defer cb.wg.Done()
+
 	var wg sync.WaitGroup
 
 	wg.Add(2)
@@ -108,8 +111,6 @@ func (cb *circuitBreaker) readResponse(
 		wg.Done()
 	}()
 	wg.Wait()
-
-	cb.wg.Done()
 }
 
 type circuitBreaker struct {
